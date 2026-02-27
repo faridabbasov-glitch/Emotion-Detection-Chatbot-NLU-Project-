@@ -1,58 +1,116 @@
-**Overview**
+# 🧠 Emotion Detection Chatbot - NLU Project
 
-This project implements a Natural Language Understanding (NLU) model to classify emotions in text. Using a pretrained DistilBERT model, it is fine-tuned on the Emotion Dataset
- to recognize multiple emotions including sadness, joy, love, anger, fear, and surprise.
+> Fine-tuned **DistilBERT** model for real-time emotion classification with an interactive chatbot interface.
 
-The project also demonstrates real-time integration with a chatbot-style interface, where user input is analyzed for emotion and the bot responds with human-like replies based on the predicted emotion.
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)
+![HuggingFace](https://img.shields.io/badge/HuggingFace-Transformers-FF9A00?style=flat&logo=huggingface&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
+![Accuracy](https://img.shields.io/badge/Accuracy-92.70%25-brightgreen?style=flat)
+![F1 Score](https://img.shields.io/badge/F1%20Score-0.9268-brightgreen?style=flat)
 
-**Features**
+---
 
-1)Fine-tuning of a pretrained DistilBERT model for multi-class emotion classification.
+## 📌 Overview
 
-2)High performance on the test set: Accuracy: 0.9270, F1 Score: 0.9268.
+This project fine-tunes a **DistilBERT** transformer model on the [Emotion Dataset](https://huggingface.co/datasets/dair-ai/emotion) to classify text into 6 emotional categories. It also features a real-time **command-line chatbot** that detects the user's emotion and responds with human-like replies.
 
-3)Real-time chatbot interface for emotion detection and interactive responses.
+---
 
-4)Confidence scores for predictions to indicate model certainty.
+## 🎯 Emotions Detected
 
-5)Ready for integration into chatbots, text analysis tools, or other NLU applications.
+| Label | Emotion |
+|-------|---------|
+| 😢 | Sadness |
+| 😄 | Joy |
+| ❤️ | Love |
+| 😡 | Anger |
+| 😨 | Fear |
+| 😲 | Surprise |
 
-6)Clear separation of training and inference for reproducibility.
+---
 
-**Model Training**
+## 📊 Model Performance
 
-1)The model was trained using the Hugging Face Trainer API.
+| Metric | Score |
+|--------|-------|
+| **Accuracy** | 0.9270 |
+| **Weighted F1** | 0.9268 |
 
-2)Dataset: Emotion Dataset with training, validation, and test splits.
+> Evaluated on the held-out test split of the Emotion Dataset.
 
-3)Metrics used: Accuracy and weighted F1 score.
+---
 
-**Final performance on the test set:**
+## 🏗️ Model Architecture
 
-Accuracy: 0.9270
+```
+DistilBERT (pretrained, fine-tuned)
+└── Classification Head
+    └── Dense(6, softmax) → Emotion Label
+```
 
-F1 Score: 0.9268
+- **Base model:** `distilbert-base-uncased`
+- **Training framework:** Hugging Face `Trainer` API
+- **Optimizer:** AdamW with linear warmup scheduler
 
-The trained model and tokenizer are saved in the trained_model/ directory for reuse.
+---
 
-**Chatbot Integration**
+## 🚀 Quick Start
 
-1)The project includes a command-line chatbot interface.
+```bash
+# 1. Clone the repo
+git clone https://github.com/faridabbasov-glitch/Emotion-Detection-Chatbot-NLU-Project.git
+cd Emotion-Detection-Chatbot-NLU-Project
 
-2)User input is analyzed for emotion in real-time.
+# 2. Install dependencies
+pip install -r requirements.txt
 
-3)Each predicted emotion triggers a pre-written human-like response.
+# 3. Open the notebook
+jupyter notebook NLU_Intent_classification.ipynb
+```
 
-4)Supports exit commands to stop the conversation.
+---
 
-5)Demonstrates the practical integration of a fine-tuned NLU model into an interactive system.
+## 💬 Chatbot Demo
 
-**Metrics and Evaluation**
+```
+You: I just got accepted to my dream university!
+Bot: 😄 That sounds wonderful! I'm glad you're feeling happy!
 
-Accuracy: Overall correctness of the model’s predictions.
+You: I'm really nervous about tomorrow's interview.
+Bot: 🤗 That sounds concerning. I hope everything works out for you.
 
-Weighted F1 Score: Balanced per-class performance.
+You: exit
+Bot: Goodbye! 👋
+```
 
-High test set performance demonstrates the model’s reliability for real-world text inputs.
+---
 
-Classification results are interpretable and actionable in chatbot responses.
+## 📁 Project Structure
+
+```
+├── NLU_Intent_classification.ipynb   # Training, evaluation & chatbot
+└── README.md
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Model | DistilBERT (Hugging Face) |
+| Framework | PyTorch |
+| Training | Hugging Face Trainer API |
+| Dataset | dair-ai/emotion |
+| Interface | Jupyter Notebook |
+
+---
+
+## 📦 Requirements
+
+```
+transformers>=4.30
+torch>=2.0
+datasets>=2.12
+scikit-learn>=1.2
+```
