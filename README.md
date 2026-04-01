@@ -1,116 +1,124 @@
-# 🧠 Emotion Detection Chatbot - NLU Project
+# 🎭 Emotion Detection Chatbot
 
-> Fine-tuned **DistilBERT** model for real-time emotion classification with an interactive chatbot interface.
+A fine-tuned **DistilBERT** model that detects emotions in text across 6 categories, wrapped in an interactive chatbot interface.
 
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)
-![HuggingFace](https://img.shields.io/badge/HuggingFace-Transformers-FF9A00?style=flat&logo=huggingface&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
-![Accuracy](https://img.shields.io/badge/Accuracy-92.70%25-brightgreen?style=flat)
-![F1 Score](https://img.shields.io/badge/F1%20Score-0.9268-brightgreen?style=flat)
+Built during a Data Science Internship at **Intern Intelligence** (Oct–Nov 2025).
 
 ---
 
-## 📌 Overview
+## What it does
 
-This project fine-tunes a **DistilBERT** transformer model on the [Emotion Dataset](https://huggingface.co/datasets/dair-ai/emotion) to classify text into 6 emotional categories. It also features a real-time **command-line chatbot** that detects the user's emotion and responds with human-like replies.
+The model reads a sentence and detects which emotion it expresses:
 
----
-
-## 🎯 Emotions Detected
-
-| Label | Emotion |
-|-------|---------|
-| 😢 | Sadness |
-| 😄 | Joy |
-| ❤️ | Love |
-| 😡 | Anger |
-| 😨 | Fear |
-| 😲 | Surprise |
+| Emotion | Example |
+|---------|---------|
+| 😔 Sadness | *"I feel so lost and alone."* |
+| 😊 Joy | *"Today was the best day of my life!"* |
+| ❤️ Love | *"I love spending time with you."* |
+| 😤 Anger | *"This is so frustrating!"* |
+| 🤗 Fear | *"I am terrified of what might happen."* |
+| 😲 Surprise | *"Wow, I did not expect that at all!"* |
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
 | Metric | Score |
 |--------|-------|
-| **Accuracy** | 0.9270 |
-| **Weighted F1** | 0.9268 |
+| Accuracy | 92.50% |
+| F1 Score | 92.46% |
 
-> Evaluated on the held-out test split of the Emotion Dataset.
+### Per-class results:
 
----
+| Emotion | Precision | Recall | F1 |
+|---------|-----------|--------|----|
+| Sadness | 0.97 | 0.96 | 0.96 |
+| Joy | 0.93 | 0.97 | 0.95 |
+| Love | 0.91 | 0.74 | 0.81 |
+| Anger | 0.91 | 0.94 | 0.92 |
+| Fear | 0.91 | 0.85 | 0.88 |
+| Surprise | 0.68 | 0.85 | 0.76 |
 
-## 🏗️ Model Architecture
-
-```
-DistilBERT (pretrained, fine-tuned)
-└── Classification Head
-    └── Dense(6, softmax) → Emotion Label
-```
-
-- **Base model:** `distilbert-base-uncased`
-- **Training framework:** Hugging Face `Trainer` API
-- **Optimizer:** AdamW with linear warmup scheduler
+> **Note:** Love and Surprise scored lower because the dataset has significantly fewer examples for these classes (159 and 66 samples vs 500+ for others).
 
 ---
 
-## 🚀 Quick Start
+## How it works
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/faridabbasov-glitch/Emotion-Detection-Chatbot-NLU-Project.git
-cd Emotion-Detection-Chatbot-NLU-Project
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Open the notebook
-jupyter notebook NLU_Intent_classification.ipynb
+```
+User types a sentence
+        ↓
+Tokenizer converts text to numbers
+        ↓
+DistilBERT processes the input
+        ↓
+Softmax converts output to probabilities
+        ↓
+Highest probability → predicted emotion + confidence %
 ```
 
 ---
 
-## 💬 Chatbot Demo
+## Project Structure
 
 ```
-You: I just got accepted to my dream university!
-Bot: 😄 That sounds wonderful! I'm glad you're feeling happy!
-
-You: I'm really nervous about tomorrow's interview.
-Bot: 🤗 That sounds concerning. I hope everything works out for you.
-
-You: exit
-Bot: Goodbye! 👋
-```
-
----
-
-## 📁 Project Structure
-
-```
-├── NLU_Intent_classification.ipynb   # Training, evaluation & chatbot
+emotion-detection-chatbot/
+├── config.py                  # All hyperparameters and settings
+├── train.py                   # Fine-tuning script
+├── NLU_Emotion_Chatbot.ipynb  # Full notebook (train + chatbot)
 └── README.md
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| Model | DistilBERT (Hugging Face) |
-| Framework | PyTorch |
-| Training | Hugging Face Trainer API |
-| Dataset | dair-ai/emotion |
-| Interface | Jupyter Notebook |
+- **Model:** DistilBERT (distilbert-base-uncased)
+- **Dataset:** [emotion](https://huggingface.co/datasets/emotion) — 16,000 training samples, 6 classes
+- **Libraries:** HuggingFace Transformers, PyTorch, Datasets, scikit-learn
+- **Platform:** Google Colab (T4 GPU)
 
 ---
 
-## 📦 Requirements
+## Training Details
+
+| Parameter | Value |
+|-----------|-------|
+| Epochs | 8 |
+| Learning Rate | 2e-5 |
+| Batch Size | 16 |
+| Max Sequence Length | 128 |
+| Warmup Steps | 500 |
+| Weight Decay | 0.01 |
+
+---
+
+## How to Run
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/YOUR_USERNAME/emotion-detection-chatbot
+```
+
+### 2. Open the notebook
+Open `NLU_Emotion_Chatbot.ipynb` in Google Colab.
+
+### 3. Train the model
+Run all cells from top to bottom. The model will be saved to your Google Drive automatically.
+
+### 4. Chat
+Run the last cell — a chatbot interface with **Send** and **Exit** buttons will appear.
+
+---
+
+## Sample Output
 
 ```
-transformers>=4.30
-torch>=2.0
-datasets>=2.12
-scikit-learn>=1.2
+You     : I am so happy today!
+Emotion : JOY (97.3%)
+Bot     : That sounds wonderful! 😊
+
+You     : I feel so sad and depressed.
+Emotion : SADNESS (98.7%)
+Bot     : I'm sorry you're feeling down. 😔
 ```
