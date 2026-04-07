@@ -2,7 +2,7 @@
 
 A fine-tuned **DistilBERT** model that detects emotions in text across 6 categories, wrapped in an interactive chatbot interface.
 
-Built during a Data Science Internship at **Intern Intelligence** (Oct–Nov 2025).
+Built during a Artificial Intelligence Internship at **Intern Intelligence** (Oct–Nov 2025).
 
 ---
 
