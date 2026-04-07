@@ -97,7 +97,7 @@ emotion-detection-chatbot/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/emotion-detection-chatbot
+git clone https://github.com/faridabbasov-glitch/emotion-detection-chatbot
 ```
 
 ### 2. Open the notebook
